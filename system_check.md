@@ -1,5 +1,5 @@
 ## Ruby Version
-I'm using rbenv, with 2.1.3. The newest version is 2.1.4, but I haven't tested it yet, and I don't think it's critical me to update right now, but I probably will soon.
+I'm using rbenv, with 2.1.3. The newest version is 2.1.4, but I haven't tested it yet, and I don't think it's critical for me to update right now, but I probably will soon.
 
 ```
 小A曰:ruby -v
