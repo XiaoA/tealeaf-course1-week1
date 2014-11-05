@@ -1,10 +1,5 @@
 # A simple calculator, built in Ruby
         
-      # 1) string interpolation vs. concatenation
-      # 2) extract repetitive logic to methods
-      # 3) keep track of variable types (class)
-      # 4) variable scope determined by 'do...end' (or '{}'); outer scope vars are available to inner, but not vice versa
-      # 5) pass by ref vs. pass by value: if method mutates caller, outer obj was modified
     require 'pry'
     
     def say(msg)
@@ -17,6 +12,7 @@
     say "What's the second number?"
     num2 = gets.chomp
     
+    say "Please choose an operation:"
     say "1) add 2) subtract 3) multiply 4) divide"
     operator = gets.chomp
     
