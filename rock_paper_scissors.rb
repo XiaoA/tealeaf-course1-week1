@@ -1,4 +1,3 @@
-require 'pry'
 # Use a for...while loop to allow the user to play as many times as he/she wants
 begin
   puts "Let's play 'Rock, Paper, Scissors!'"
@@ -32,7 +31,7 @@ begin
   elsif (usr_val < comp_val) && (usr_throw == "s")
     puts "You: scissors | Me: rock"
     puts "=> You lose!"
-  elsif (usr_val == comp_val)
+  else (usr_val == comp_val)
     puts "It's a tie! Try again!"
   end
   
