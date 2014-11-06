@@ -51,6 +51,5 @@
     break if gets.chomp.downcase != 'y'
   
   end
-  
     
-  puts "Thanks for playing!"
+    puts "Thanks for playing!"
