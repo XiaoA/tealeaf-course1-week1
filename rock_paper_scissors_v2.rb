@@ -1,4 +1,4 @@
-# This version combines numerous improvements from the video walkthrough into my original version
+# This version combines numerous improvements from the video walkthrough with elements from my original version
 
     CHOICES = {'r' => 'Rock', 'p' => 'Paper', 's' => 'Scissors' }
     puts "Let's play 'Rock, Paper, Scissors!'"
