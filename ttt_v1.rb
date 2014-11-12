@@ -4,6 +4,8 @@ require 'pry'
 
 board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}     
 
+WINNING_BOARD = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
+
 def draw_board(board)
   system 'clear'
   
@@ -18,9 +20,8 @@ def draw_board(board)
 end
 
 def empty_square(board)
-  board.select {|k, v| v ==  " " }.to_a
+  board.select {|k, v| v ==  " " }.keys
 end
-
 
 def player_places_piece(board) # pass in board hash as the parameter, so that we can set it within the method
   puts "Pick a square (1 ~ 9)."
@@ -30,29 +31,34 @@ end
 
 def computer_places_piece(board)
   position = empty_square(board).sample
+  board[position] = 'O'
 end
 
-def check_for_winner(board)
-  if 
-    puts "You win!!!"
-  elsif
-    puts "Sorry, you lose..."
+def check_for_winner
+  case
+  when WINNING_BOARD.select
+    puts "You've won!"
+  when !empty_square(board)
+    puts "It's a tie. Play again?"
   else
-    puts "It's a draw!"
+    puts "You lost. Play again?"
   end
+end
+
+begin
+  draw_board(board)
+  player_places_piece(board)
+  check_for_winner
+  empty_square(board)
+  computer_places_piece(board)
+  check_for_winner
+end until check_for_winner == true || empty_square(board).empty?
        
-       # begin
-       #   draw_board(board)
-       #   player_places_piece(board)
-       #   empty_square(board)
-       #   computer_places_piece(board)
-       # end
-       
-       
-       # 5. do...while (it should be begin...end until here) loop, to keep the game running until there's a winner or board gets full
-       draw_board(board)
-       while true
-         player_places_piece(board)
-         computer_places_piece(board)
-         draw_board(board) # to re-draw the board
-       end # until winner || board_full? # it's obvious we will need a method to check for returning the winner, and another to check if the board is full (all the values were set)
+while empty_square(board) == true do
+  draw_board(board)
+  player_places_piece(board)
+  check_for_winner(board)
+  computer_places_piece(board)
+  check_for_winner(board)
+end until check_for_winner == true || empty_square(board).empty?
+                 
