@@ -4,11 +4,49 @@ require 'pry'
 
 board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}     
 
-WINNING_BOARD = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
+def empty_squares(board)
+  board.select {|k, v| v ==  " " }.keys
+end
+
+def player_picks_square(board)
+  begin
+    puts "Pick a square (1 ~ 9)."
+    position = gets.chomp.to_i
+  end until empty_squares(board).include?(position)
+  board[position] = 'X'
+end
+
+def computer_picks_square(board)
+  position = empty_squares(board).sample
+  board[position] = 'O'
+end
+
+# def check_for_winner(board)
+#   winning_squares = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
+#   winning_squares.each do |line|
+#     case
+#     when board.values_at(*line).count('X') == 3
+#       return 'Player'
+#     when board.values_at(*line).count('O') == 3
+#       return 'Computer'
+#     else
+#       return nil
+#     end
+#   end
+# end
+
+def check_for_winner(board)
+  winning_squares = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
+  winning_squares.each do |line|
+    return "Player" if board.values_at(*line).count("X") == 3
+    return "Computer" if board.values_at(*line).count('O') == 3
+  end
+  nil
+end
 
 def draw_board(board)
   system 'clear'
-  
+
   puts "      |      |      "
   puts "#{board[1]}     |#{board[2]}     |#{board[3]}     "
   puts "------+------+-------"
@@ -19,46 +57,29 @@ def draw_board(board)
   puts "#{board[7]}     |#{board[8]}     |#{board[9]}     "
 end
 
-def empty_square(board)
-  board.select {|k, v| v ==  " " }.keys
+loop do
+  begin
+    draw_board(board)
+    player_picks_square(board)
+    check_for_winner(board)
+    draw_board(board)
+    computer_picks_square(board)
+    winner = check_for_winner(board)
+  end until winner || empty_squares(board).empty?
+
+if winner
+  puts "#{winner} won!"
+else
+  puts "It's a tie!"
 end
 
-def player_places_piece(board) # pass in board hash as the parameter, so that we can set it within the method
-  puts "Pick a square (1 ~ 9)."
-  position = gets.to_i # get the user input to decide where player wants to place his or her piece
-  board[position] = 'X' # set the hash value
+puts "Would you like to play again? (Y/N)"
+play_again = gets.chomp.upcase == 'Y'
+
 end
 
-def computer_places_piece(board)
-  position = empty_square(board).sample
-  board[position] = 'O'
-end
 
-def check_for_winner
-  case
-  when WINNING_BOARD.select
-    puts "You've won!"
-  when !empty_square(board)
-    puts "It's a tie. Play again?"
-  else
-    puts "You lost. Play again?"
-  end
-end
 
-begin
-  draw_board(board)
-  player_places_piece(board)
-  check_for_winner
-  empty_square(board)
-  computer_places_piece(board)
-  check_for_winner
-end until check_for_winner == true || empty_square(board).empty?
-       
-while empty_square(board) == true do
-  draw_board(board)
-  player_places_piece(board)
-  check_for_winner(board)
-  computer_places_piece(board)
-  check_for_winner(board)
-end until check_for_winner == true || empty_square(board).empty?
-                 
+
+
+
