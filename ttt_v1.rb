@@ -2,7 +2,12 @@
 
 require 'pry'
 
-board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}     
+board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
+
+def clear_board
+  system 'clear'
+  board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
+end
 
 def empty_squares(board)
   board.select {|k, v| v ==  " " }.keys
@@ -21,20 +26,6 @@ def computer_picks_square(board)
   board[position] = 'O'
 end
 
-# def check_for_winner(board)
-#   winning_squares = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
-#   winning_squares.each do |line|
-#     case
-#     when board.values_at(*line).count('X') == 3
-#       return 'Player'
-#     when board.values_at(*line).count('O') == 3
-#       return 'Computer'
-#     else
-#       return nil
-#     end
-#   end
-# end
-
 def check_for_winner(board)
   winning_squares = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
   winning_squares.each do |line|
@@ -46,7 +37,6 @@ end
 
 def draw_board(board)
   system 'clear'
-
   puts "      |      |      "
   puts "#{board[1]}     |#{board[2]}     |#{board[3]}     "
   puts "------+------+-------"
@@ -65,6 +55,7 @@ loop do
     draw_board(board)
     computer_picks_square(board)
     winner = check_for_winner(board)
+    draw_board(board)
   end until winner || empty_squares(board).empty?
 
 if winner
@@ -74,9 +65,23 @@ else
 end
 
 puts "Would you like to play again? (Y/N)"
-play_again = gets.chomp.upcase == 'Y'
+play_again = gets.chomp.upcase
+
+if play_again == 'Y'
+      board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
+      draw_board(board)
+      player_picks_square(board)
+      computer_picks_square(board)
+else
+  break
+end
 
 end
+
+puts "Thanks for playing!"
+
+
+
 
 
 
