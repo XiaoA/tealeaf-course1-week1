@@ -4,18 +4,13 @@ require 'pry'
 
 board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
 
-def clear_board
-  system 'clear'
-  board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
-end
-
 def empty_squares(board)
   board.select {|k, v| v ==  " " }.keys
 end
 
 def player_picks_square(board)
   begin
-    puts "Pick a square (1 ~ 9)."
+    puts "Pick an empty square (1 ~ 9)."
     position = gets.chomp.to_i
   end until empty_squares(board).include?(position)
   board[position] = 'X'
@@ -30,7 +25,7 @@ def check_for_winner(board)
   winning_squares = [[1, 2, 3], [1, 5, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]]
   winning_squares.each do |line|
     return "Player" if board.values_at(*line).count("X") == 3
-    return "Computer" if board.values_at(*line).count('O') == 3
+    return "Computer" if board.values_at(*line).count("O") == 3
   end
   nil
 end
@@ -58,23 +53,21 @@ loop do
     draw_board(board)
   end until winner || empty_squares(board).empty?
 
-if winner
-  puts "#{winner} won!"
-else
-  puts "It's a tie!"
-end
+  if winner
+    puts "#{winner} won!"
+  else
+    puts "It's a tie!"
+  end
 
-puts "Would you like to play again? (Y/N)"
-play_again = gets.chomp.upcase
+  puts "Would you like to play again? (Y/N)"
+  play_again = gets.chomp.upcase
 
-if play_again == 'Y'
-      board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
-      draw_board(board)
-      player_picks_square(board)
-      computer_picks_square(board)
-else
-  break
-end
+  if play_again == 'Y'
+    board = {1 => " ", 2 => " ", 3 => " ", 4 => " ", 5 => " ", 6 => " ", 7 => " ", 8 => " ", 9 => " "}
+    draw_board(board)
+  else
+    break
+  end
 
 end
 
